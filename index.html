@@ -3,86 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Calculator</title>
+    <title>Finance Calculators</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            text-align: center; 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
+            display: flex;
         }
-        .container { 
-            max-width: 600px; 
-            margin: 20px auto; 
-            padding: 20px; 
-            border: 2px solid #4CAF50; 
-            border-radius: 8px; 
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        .container {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
             background-color: #ffffff;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        input { 
-            width: 80%; 
-            padding: 10px; 
-            margin: 5px; 
-            border: 1px solid #4CAF50;
-            border-radius: 5px;
+        .input-group {
+            margin-bottom: 10px;
         }
-        button { 
-            padding: 10px 20px; 
-            margin: 10px; 
-            cursor: pointer; 
-            border: none;
-            border-radius: 5px;
-            color: white;
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
         }
-        button:first-of-type {
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button {
             background-color: #4CAF50;
-        }
-        button:last-of-type {
-            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <h2>Finance Tools</h2>
+        <ul>
+            <li><a href="#">Stock Profit/Loss Calculator</a></li>
+            <li><a href="#">SIP Calculator</a></li>
+            <li><a href="#">EMI Calculator</a></li>
+            <li><a href="#">CAGR Calculator</a></li>
+            <li><a href="#">Percentage Calculator</a></li>
+            <li><a href="#">Rule of 72 Calculator</a></li>
+            <li><a href="#">Stock Split Calculator</a></li>
+            <li><a href="#">Dividend Details</a></li>
+            <li><a href="#">Bonus & Buyback Details</a></li>
+            <li><a href="#">Face Value Split & Demerger</a></li>
+            <li><a href="#">Trading Holidays</a></li>
+            <li><a href="#">Best Investment Books</a></li>
+        </ul>
+    </div>
     <div class="container">
         <h2>Stock Market Average Calculator</h2>
-        <label>First Purchase Units</label>
-        <input type="number" id="units1" placeholder="Enter units">
-        <label>Price per Share</label>
-        <input type="number" id="price1" placeholder="Enter price">
-        
-        <label>Second Purchase Units</label>
-        <input type="number" id="units2" placeholder="Enter units">
-        <label>Price per Share</label>
-        <input type="number" id="price2" placeholder="Enter price">
-        
-        <button onclick="calculateAverage()">Calculate Average</button>
-        <button onclick="clearFields()">Clear Fields</button>
-        
-        <h3>Average Price: <span id="result">-</span></h3>
+        <div class="input-group">
+            <label for="units1">First Purchase Units</label>
+            <input type="number" id="units1" placeholder="Enter units">
+        </div>
+        <div class="input-group">
+            <label for="price1">First Purchase Price per Share</label>
+            <input type="number" id="price1" placeholder="Enter price per share">
+        </div>
+        <div class="input-group">
+            <label for="units2">Second Purchase Units</label>
+            <input type="number" id="units2" placeholder="Enter units">
+        </div>
+        <div class="input-group">
+            <label for="price2">Second Purchase Price per Share</label>
+            <input type="number" id="price2" placeholder="Enter price per share">
+        </div>
+        <button class="button" onclick="calculateAverage()">Calculate Average</button>
+        <h3 id="result"></h3>
     </div>
-    
     <script>
         function calculateAverage() {
-            let u1 = parseFloat(document.getElementById('units1').value) || 0;
-            let p1 = parseFloat(document.getElementById('price1').value) || 0;
-            let u2 = parseFloat(document.getElementById('units2').value) || 0;
-            let p2 = parseFloat(document.getElementById('price2').value) || 0;
+            let units1 = parseFloat(document.getElementById('units1').value) || 0;
+            let price1 = parseFloat(document.getElementById('price1').value) || 0;
+            let units2 = parseFloat(document.getElementById('units2').value) || 0;
+            let price2 = parseFloat(document.getElementById('price2').value) || 0;
             
-            let totalUnits = u1 + u2;
-            let totalCost = (u1 * p1) + (u2 * p2);
+            let totalUnits = units1 + units2;
+            let totalCost = (units1 * price1) + (units2 * price2);
+            let averagePrice = totalUnits ? (totalCost / totalUnits).toFixed(2) : 0;
             
-            let avgPrice = totalUnits ? (totalCost / totalUnits).toFixed(2) : 0;
-            document.getElementById('result').innerText = avgPrice;
-        }
-        
-        function clearFields() {
-            document.getElementById('units1').value = "";
-            document.getElementById('price1').value = "";
-            document.getElementById('units2').value = "";
-            document.getElementById('price2').value = "";
-            document.getElementById('result').innerText = "-";
+            document.getElementById('result').innerText = `Average Price per Share: $${averagePrice}`;
         }
     </script>
 </body>
