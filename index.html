@@ -3,16 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Average Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Stock Market Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; text-align: center; }
+        .container { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        input { width: 80%; padding: 10px; margin: 5px; }
+        button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Average Calculator</h2>
-        <input type="text" id="numbers" placeholder="Enter numbers separated by commas">
-        <button onclick="calculateAverage()">Calculate</button>
-        <p id="result"></p>
+        <h2>Stock Market Average Calculator</h2>
+        <label>First Purchase Units</label>
+        <input type="number" id="units1" placeholder="Enter units">
+        <label>Price per Share</label>
+        <input type="number" id="price1" placeholder="Enter price">
+        
+        <label>Second Purchase Units</label>
+        <input type="number" id="units2" placeholder="Enter units">
+        <label>Price per Share</label>
+        <input type="number" id="price2" placeholder="Enter price">
+        
+        <button onclick="calculateAverage()">Calculate Average</button>
+        <button onclick="clearFields()">Clear Fields</button>
+        
+        <h3>Average Price: <span id="result">-</span></h3>
     </div>
-    <script src="script.js"></script>
+    
+    <script>
+        function calculateAverage() {
+            let u1 = parseFloat(document.getElementById('units1').value) || 0;
+            let p1 = parseFloat(document.getElementById('price1').value) || 0;
+            let u2 = parseFloat(document.getElementById('units2').value) || 0;
+            let p2 = parseFloat(document.getElementById('price2').value) || 0;
+            
+            let totalUnits = u1 + u2;
+            let totalCost = (u1 * p1) + (u2 * p2);
+            
+            let avgPrice = totalUnits ? (totalCost / totalUnits).toFixed(2) : 0;
+            document.getElementById('result').innerText = avgPrice;
+        }
+        
+        function clearFields() {
+            document.getElementById('units1').value = "";
+            document.getElementById('price1').value = "";
+            document.getElementById('units2').value = "";
+            document.getElementById('price2').value = "";
+            document.getElementById('result').innerText = "-";
+        }
+    </script>
 </body>
 </html>
